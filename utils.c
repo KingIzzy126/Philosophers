@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:47:13 by ismailalash       #+#    #+#             */
-/*   Updated: 2024/12/27 23:01:20 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/03 10:24:53 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,26 @@ int ft_atoi(char *str)
     if (str[i] != '\0')
         return(-1);
     return ((int)result);
+}
+
+void *safe_malloc(size_t bytes)
+{
+    void    *buff;
+    
+    buff = malloc(bytes);
+    if (NULL == buff)
+        exit(1);
+    return(buff);
+}
+
+size_t  get_current_time(void)
+{
+    struct timeval  time;
+
+    if (gettimeofday(&time, NULL) == -1)
+    {
+        printf("Error: gettimeofday() fail\n");
+        return (0);
+    }
+    return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }

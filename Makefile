@@ -3,7 +3,7 @@ CC = cc
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRCS = philo.c parse.c utils.c
+SRCS = philo.c parse.c utils.c initialization.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
