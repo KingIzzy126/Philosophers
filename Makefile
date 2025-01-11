@@ -1,10 +1,18 @@
 NAME = philo
 CC = cc
 RM = rm -rf
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -I./includes/
 
-SRCS = actiom.c parse.c utils.c initialization.c main.c
-OBJS = $(SRCS:.c=.o)
+SRCS =	action.c \
+		parse.c  \
+		utils.c \
+		initialization.c \
+		threads.c \
+		main.c \
+		monitor.c \
+
+SRC = $(addprefix ./srcs/,$(SRCS))
+OBJS = $(SRC:.c=.o)
 
 all: $(NAME)
 
