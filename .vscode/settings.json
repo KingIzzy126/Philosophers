@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "philo.h": "c",
+        "__hash_table": "c",
+        "__locale": "c",
+        "__threading_support": "c",
+        "locale": "c",
+        "string": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "algorithm": "c"
+    }
+}
