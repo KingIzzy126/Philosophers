@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:47:13 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/11 21:21:51 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/13 15:31:05 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,8 @@ void    clean_up(t_input *input)
     }
     pthread_mutex_destroy(&input->print_mutex);
     pthread_mutex_destroy(&input->dead_mutex);
+    if (input->forks != NULL)
+        free(input->forks);
+    if (input->philo != NULL)
+        free(input->philo);
 }
