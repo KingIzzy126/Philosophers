@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:47:13 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/13 15:31:05 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/19 21:27:18 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,23 @@ void    clean_up(t_input *input)
 {
     int i;
 
-    i = 0;
-    while(i < input->num_philos)
+    if (input->forks != NULL)
     {
-        pthread_mutex_destroy(&input->forks[i].fork);
-        i++;
+        i = 0;
+        while(i < input->num_philos)
+        {
+            pthread_mutex_destroy(&input->forks[i].fork);
+            pthread_mutex_destroy(&input->philo[i].meal_mutex);
+            i++;
+        }
+        free(input->forks);
+        input->forks = NULL;
     }
     pthread_mutex_destroy(&input->print_mutex);
     pthread_mutex_destroy(&input->dead_mutex);
-    if (input->forks != NULL)
-        free(input->forks);
     if (input->philo != NULL)
+    {
         free(input->philo);
+        input->philo = NULL;
+    }
 }

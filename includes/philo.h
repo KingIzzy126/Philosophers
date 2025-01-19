@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 15:14:51 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/11 13:14:56 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/19 21:10:23 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ typedef struct s_fork
 
 typedef struct t_philo
 { 
-    int			id;
-    int			nbr_meals;
-    int			meals_eaten;
-    size_t 		last_meal;
-	t_fork		left_fork;
-	t_fork		right_fork;
-	pthread_t	thread_id;
-	t_input		*input;
+    int				id;
+    int				nbr_meals;
+    int				meals_eaten;
+    size_t 			last_meal;
+	t_fork			left_fork;
+	t_fork			right_fork;
+	pthread_t		thread_id;
+	pthread_mutex_t meal_mutex;
+	t_input			*input;
 }               t_philo;
 
 
@@ -80,7 +81,7 @@ void	*monitor_routine(void *arg);
 // threads.c
 int		check_dead_flag(t_philo *philo);
 void	*philosopher_actions(void *arguments);
-int		join_philosopher_threads(t_input *input);
+int		join_threads(t_input *input, pthread_t monitor_thread);
 int		create_philo_threads(t_input *input);
 int		create_monitor_thread(t_input *input, pthread_t *monitor_thread);
 int		create_threads(t_input *input);

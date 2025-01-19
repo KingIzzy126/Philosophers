@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:32:32 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/11 14:00:33 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/19 11:02:57 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,6 @@ void *philosopher_actions(void *arguments)
     return (0);
 }
 
-int join_philosopher_threads(t_input *input)
-{
-    int i;
-
-    i = 0;
-    while (i < input->num_philos)
-    {
-        if(pthread_join(input->philo[i].thread_id, NULL) != 0)
-        {
-            printf("Error: Failed to join threads%d\n", i + 1);
-            return (1);
-        }
-        i++;
-    }
-    return (0);
-}
-
 int create_philo_threads(t_input *input)
 {
     int i;
@@ -67,7 +50,7 @@ int create_philo_threads(t_input *input)
             printf("Error: Failed to create thread %d\n", i + 1);
             clean_up(input);
             return (1);
-        }
+        }               
         i++;
     }
     return (0);
@@ -83,6 +66,28 @@ int create_monitor_thread(t_input *input, pthread_t *monitor_thread)
     }
     return (0);
 }
+
+int join_threads(t_input *input, pthread_t monitor_thread)
+{
+    int i;
+
+    i = 0;
+    while (i < input->num_philos)
+    {
+        if(pthread_join(input->philo[i].thread_id, NULL) != 0)
+        {
+            printf("Error: Failed to join threads %d\n", i + 1);
+            return (1);
+        }
+        i++;
+    }
+    if (pthread_join(monitor_thread, NULL) != 0)
+    {
+        printf("Error: Failed to join monitor thread\n");
+        return (1);
+    }
+    return (0);
+}
 int create_threads(t_input *input)
 {
     pthread_t   monitor_thread;
@@ -91,13 +96,7 @@ int create_threads(t_input *input)
         return (1);
     if (create_monitor_thread(input, &monitor_thread) != 0)
         return (1);
-    if (pthread_join(monitor_thread, NULL) != 0)
-    {
-        printf("Error: Failed to join monitor thread\n");
-        clean_up(input);
-        return (1);
-    }
-    if (join_philosopher_threads(input) != 0)
+    if (join_threads(input, monitor_thread) != 0)
     {
         clean_up(input);
         return (1);

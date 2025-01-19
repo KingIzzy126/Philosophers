@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:49:18 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/10 20:55:59 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/19 21:23:24 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,17 @@ int check_philo_death(t_input *input)
     i = 0; 
     while(i < input->num_philos)
     {
-        pthread_mutex_lock(&input->dead_mutex);
+        pthread_mutex_lock(&input->philo[i].meal_mutex);
         if ((get_current_time() - input->philo[i].last_meal) > (size_t)input->time_death)
         {
-            input->dead_flag = 1;
             print_message(&input->philo[i], "died");
+            pthread_mutex_lock(&input->dead_mutex);
+            input->dead_flag = 1;
             pthread_mutex_unlock(&input->dead_mutex);
+            pthread_mutex_unlock(&input->philo[i].meal_mutex);
             return(1);
         }
-        pthread_mutex_unlock(&input->dead_mutex);
+        pthread_mutex_unlock(&input->philo[i].meal_mutex);
         i++;
     }
     return(0);
@@ -44,8 +46,10 @@ int check_meal_completion(t_input *input)
     i = 0;
     while (i < input->num_philos)
     {
+        pthread_mutex_lock(&input->philo[i].meal_mutex);
         if (input->philo[i].meals_eaten >= input->num_meals)
             full_philos++;
+        pthread_mutex_unlock(&input->philo[i].meal_mutex);
         i++;
     }
     if (full_philos == input->num_philos)

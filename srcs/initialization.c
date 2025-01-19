@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 15:58:06 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/03 10:46:26 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/19 21:11:29 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int init_philo(t_input *input)
         input->philo[i].input = input;
         input->philo[i].left_fork = input->forks[i];
         input->philo[i].right_fork = input->forks[(i + 1) % input->num_philos];
+        pthread_mutex_init(&input->philo[i].meal_mutex, NULL);
         i++;
     }
     return (0);
