@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 15:14:51 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/19 21:10:23 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/19 21:30:24 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int     ft_atoi(char *str);
 void	*safe_malloc(size_t bytes);
 size_t  get_current_time(void);
 void    print_message(t_philo *philo, char *str);
-void    precise_sleep(size_t time, t_philo *philo);
+int		precise_sleep(size_t time);
 void    clean_up(t_input *input);
 
 #endif

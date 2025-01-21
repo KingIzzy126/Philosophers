@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 12:36:17 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/19 21:19:15 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/19 21:30:37 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	philosopher_is_thinking(t_philo *philo)
 void	philosopher_is_sleeping(t_philo *philo)
 {
     print_message(philo, "is sleeping");
-    precise_sleep(philo->input->time_sleep, philo);
+    precise_sleep(philo->input->time_sleep);
 }
 
 void	philosopher_is_eating(t_philo *philo)
@@ -34,7 +34,7 @@ void	philosopher_is_eating(t_philo *philo)
     philo->last_meal = get_current_time();
     philo->meals_eaten++;
     pthread_mutex_unlock(&philo->meal_mutex);
-    precise_sleep(philo->input->time_eat, philo);
+    precise_sleep(philo->input->time_eat);
     pthread_mutex_unlock(&philo->right_fork.fork);
     pthread_mutex_unlock(&philo->left_fork.fork);
 }
