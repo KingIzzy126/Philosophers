@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:47:13 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/20 07:23:11 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/22 17:24:14 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void    print_message(t_philo *philo, char *str)
 
     pthread_mutex_lock(&philo->input->print_mutex);
     pthread_mutex_lock(&philo->input->dead_mutex);
-    if(!philo->input->dead_flag)
+    if(philo->input->dead_flag == 0)
     {
         time = get_current_time() - philo->input->program_start_time;
         printf("%zu %d %s\n", time, philo->id, str);
@@ -88,23 +88,19 @@ void    clean_up(t_input *input)
 {
     int i;
 
-    if (input->forks != NULL)
+    i = 0;
+    if (input->philo != NULL)
     {
-        i = 0;
-        while(i < input->num_philos)
+        while (i < input->num_philos)
         {
-            pthread_mutex_destroy(&input->forks[i].fork);
+            pthread_mutex_destroy(&input->philo[i].left_fork);
+            pthread_mutex_destroy(&input->philo[i].right_fork);
             pthread_mutex_destroy(&input->philo[i].meal_mutex);
             i++;
         }
-        free(input->forks);
-        input->forks = NULL;
-    }
-    pthread_mutex_destroy(&input->print_mutex);
-    pthread_mutex_destroy(&input->dead_mutex);
-    if (input->philo != NULL)
-    {
         free(input->philo);
         input->philo = NULL;
     }
+    pthread_mutex_destroy(&input->print_mutex);
+    pthread_mutex_destroy(&input->dead_mutex);
 }

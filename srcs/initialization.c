@@ -6,48 +6,59 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 15:58:06 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/19 21:11:29 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/23 11:29:27 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int init_data(t_input *input)
+void init_forks(t_philo *philos, int num_philos)
 {
     int i;
-    
+
     i = 0;
-    input->philo = safe_malloc(sizeof(t_philo) * input->num_philos);
-    input->forks = safe_malloc(sizeof(t_fork) * input->num_philos);
-    while (i <input->num_philos)
+    while (i < num_philos)
     {
-        input->forks[i].fork_id = i + 1;
-        pthread_mutex_init(&input->forks[i].fork, NULL);
+        pthread_mutex_init(&philos[i].left_fork, NULL);
+        pthread_mutex_init(&philos[i].right_fork, NULL);
         i++;
     }
-    pthread_mutex_init(&input->print_mutex, NULL);
-    pthread_mutex_init(&input->dead_mutex, NULL);
-    input->dead_flag = 0;
-    input->program_start_time = get_current_time();
-    return (0);
 }
 
-int init_philo(t_input *input)
+void init_philosophers(t_philo *philos, t_input *input)
 {
     int i;
 
     i = 0;
     while (i < input->num_philos)
     {
-        input->philo[i].id = i + 1;
-        input->philo[i].nbr_meals = input->num_meals;
-        input->philo[i].meals_eaten = 0;
-        input->philo[i].last_meal = input->program_start_time;
-        input->philo[i].input = input;
-        input->philo[i].left_fork = input->forks[i];
-        input->philo[i].right_fork = input->forks[(i + 1) % input->num_philos];
-        pthread_mutex_init(&input->philo[i].meal_mutex, NULL);
+        philos[i].id = i + 1;
+        philos[i].meals_eaten = 0;
+        
+        philos[i].last_meal = input->program_start_time;
+        philos[i].input = input;
+        pthread_mutex_init(&philos[i].meal_mutex, NULL);
+        if (i == 0)
+            philos[i].right_fork = philos[input->num_philos - 1].left_fork; 
+        else
+            philos[i].right_fork = philos[i - 1].left_fork;
         i++;
     }
-    return (0);
+}
+
+void init_program(t_input *input)
+{
+    pthread_mutex_init(&input->print_mutex, NULL);
+    pthread_mutex_init(&input->dead_mutex, NULL);
+    input->dead_flag = 0;
+    input->program_start_time = get_current_time();
+}
+
+void initialize(t_input *input)
+{
+    input->philo = safe_malloc(sizeof(t_philo) * input->num_philos);
+
+    init_program(input);
+    init_forks(input->philo, input->num_philos);
+    init_philosophers(input->philo, input);
 }

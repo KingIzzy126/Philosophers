@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:32:32 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/19 11:02:57 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/22 17:20:52 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void *philosopher_actions(void *arguments)
     t_philo *philo;
 
     philo = (t_philo *)arguments;
+    if (philo->id % 2 == 0)
+		precise_sleep(1);
     while (!check_dead_flag(philo))
     {
         philosopher_is_thinking(philo);

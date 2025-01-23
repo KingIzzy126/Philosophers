@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:49:18 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/20 16:09:28 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/23 22:25:10 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ int check_philo_death(t_input *input)
     i = 0;
     while(i < input->num_philos)
     {
-        pthread_mutex_lock(&input->philo->meal_mutex);
-        if (get_current_time() - input->philo->last_meal >= (size_t)input->time_death)
+        pthread_mutex_lock(&input->philo[i].meal_mutex);
+        if (get_current_time() - input->philo[i].last_meal >= (size_t)input->time_death)
         {
             print_message(&input->philo[i], "died");
             pthread_mutex_lock(&input->dead_mutex);
             input->dead_flag = 1;
             pthread_mutex_unlock(&input->dead_mutex);
-            pthread_mutex_unlock(&input->philo->meal_mutex);
+            pthread_mutex_unlock(&input->philo[i].meal_mutex);
             return(1);
         }
-        pthread_mutex_unlock(&input->philo->meal_mutex);
+        pthread_mutex_unlock(&input->philo[i].meal_mutex);
         i++;
     }
     return(0);
