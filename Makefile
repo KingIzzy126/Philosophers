@@ -1,7 +1,7 @@
 NAME = philo
 CC = cc
 RM = rm -rf
-CFLAGS = -Wall -Wextra -Werror -g3 -I./includes/ -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g3 -I./includes/
 
 SRCS =	action.c \
 		parse.c  \
