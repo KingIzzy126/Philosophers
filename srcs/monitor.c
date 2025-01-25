@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 15:49:18 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/23 22:25:10 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/25 14:55:08 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,10 @@ void *monitor_routine(void *arg)
     t_input *input;
     
     input = (t_input *)arg;
-    while(!input->dead_flag)
+    while(1)
     {
-        if (check_philo_death(input) || check_meal_completion(input))
+        if (check_philo_death(input) == 1 || check_meal_completion(input) == 1)
             break;
-        usleep(400);
     }
-    return (NULL);
+    return (arg);
 }

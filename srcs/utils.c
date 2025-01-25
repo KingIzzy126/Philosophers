@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:47:13 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/22 17:24:14 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/25 15:27:06 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ void    clean_up(t_input *input)
     {
         while (i < input->num_philos)
         {
-            pthread_mutex_destroy(&input->philo[i].left_fork);
-            pthread_mutex_destroy(&input->philo[i].right_fork);
             pthread_mutex_destroy(&input->philo[i].meal_mutex);
             i++;
         }

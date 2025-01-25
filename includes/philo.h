@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 15:14:51 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/23 22:21:07 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/25 14:47:17 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ typedef struct t_philo
 { 
     int				id;
     int				meals_eaten;
+	int				eating;
     size_t 			last_meal;
-	pthread_mutex_t	left_fork;
-	pthread_mutex_t	right_fork;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
 	pthread_mutex_t meal_mutex;
 	pthread_t		thread_id;
 	t_input			*input;
@@ -56,10 +57,12 @@ int     is_input_digit(char **av);
 int     check(t_input *input, char **av);
 
 // initialization.c
-void 	init_forks(t_philo *philos, int num_philos);
-void	init_philosophers(t_philo *philos, t_input *input);
+void	init_forks(pthread_mutex_t *forks, int num_philos);
+void	init_philosophers(t_philo *philos, t_input *input, pthread_mutex_t *forks);
 void	init_program(t_input *input);
-void	initialize(t_input *input);
+void	initialize(t_input *input, pthread_mutex_t *forks);
+void	destroy_forks(pthread_mutex_t *forks, int num_philos);
+
 // action.c
 void	philosopher_is_thinking(t_philo *philo);
 void	philosopher_is_sleeping(t_philo *philo);

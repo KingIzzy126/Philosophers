@@ -6,7 +6,7 @@
 /*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 16:32:32 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/22 17:20:52 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/24 22:47:21 by ismailalash      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void *philosopher_actions(void *arguments)
 		precise_sleep(1);
     while (!check_dead_flag(philo))
     {
-        philosopher_is_thinking(philo);
         philosopher_is_eating(philo);
         philosopher_is_sleeping(philo);
+        philosopher_is_thinking(philo);
     }
-    return (0);
+    return (arguments);
 }
 
 int create_philo_threads(t_input *input)
