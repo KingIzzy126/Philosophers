@@ -50,7 +50,6 @@ int create_philo_threads(t_input *input)
         if (pthread_create(&input->philo[i].thread_id, NULL, philosopher_actions, &input->philo[i]) != 0)
         {
             printf("Error: Failed to create thread %d\n", i + 1);
-            clean_up(input);
             return (1);
         }               
         i++;
@@ -63,7 +62,6 @@ int create_monitor_thread(t_input *input, pthread_t *monitor_thread)
     if (pthread_create(monitor_thread, NULL, monitor_routine, input) != 0)
     {
         printf("Error: Failed to create monitor thread\n");
-        clean_up(input);
         return (1);
     }
     return (0);
@@ -99,10 +97,6 @@ int create_threads(t_input *input)
     if (create_monitor_thread(input, &monitor_thread) != 0)
         return (1);
     if (join_threads(input, monitor_thread) != 0)
-    {
-        clean_up(input);
         return (1);
-    }
-    clean_up(input);
     return (0);
 }

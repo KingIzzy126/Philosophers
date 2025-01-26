@@ -22,8 +22,13 @@ int main(int ac, char **av)
     if (check(&input, av) != 0)
         return (1);
     initialize(&input, forks);
-    create_threads(&input);
+    if (create_threads(&input) != 0)
+    {
+        clean_up(&input);
+        destroy_forks(forks, input.num_philos);
+        return (1);
+    }
     clean_up(&input);
-    destroy_forks(forks, input.num_philos);
+    destroy_forks(forks, input.num_philos); 
     return(0);
 }
