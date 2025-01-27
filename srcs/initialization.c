@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismailalashqar <ismailalashqar@student.    +#+  +:+       +#+        */
+/*   By: ialashqa <ialashqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 15:58:06 by ismailalash       #+#    #+#             */
-/*   Updated: 2025/01/25 14:46:58 by ismailalash      ###   ########.fr       */
+/*   Updated: 2025/01/27 16:48:51 by ialashqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void init_philosophers(t_philo *philos, t_input *input, pthread_mutex_t *forks)
         philos[i].id = i + 1;
         philos[i].meals_eaten = 0;
         philos[i].last_meal = input->program_start_time;
-        philos[i].eating = 0;
         philos[i].input = input;
         pthread_mutex_init(&philos[i].meal_mutex, NULL);
         philos[i].left_fork = &forks[i];
