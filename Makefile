@@ -1,11 +1,13 @@
 NAME = philo
 CC = cc
 RM = rm -rf
-CFLAGS = -Wall -Wextra -Werror -g3 -I./includes/ -pthread
+CFLAGS = -Wall -Wextra -Werror -g3 -I./includes/ -pthread -fsanitize=thread
 
 SRCS =	action.c \
+		forks.c \
 		parse.c  \
 		utils.c \
+		utils2.c \
 		initialization.c \
 		threads.c \
 		main.c \
